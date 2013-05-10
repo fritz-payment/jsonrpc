@@ -9,7 +9,9 @@
  */
 namespace FritzPayment\JsonRpc\Tests\ClientTest;
 use FritzPayment\JsonRpc\Request;
+use FritzPayment\JsonRpc\Response;
 use FritzPayment\JsonRpc\Rpc\Codec;
+
 class TransportStub implements \FritzPayment\JsonRpc\Client\Transport
 {
     /**

@@ -42,6 +42,12 @@ class Client
         return $this->codec->getRequest();
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     * @throws Rpc\Codec\Exception
+     */
     public function exec(Request $request) {
         if (!$this->codec->isCodecRequest($request)) {
             throw new Exception('Invalid request. Codec cannot handle request object.');

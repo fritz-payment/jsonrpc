@@ -12,12 +12,13 @@ use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Client\Transport;
 use FritzPayment\JsonRpc\Response;
+
 class Curl implements Transport
 {
 
     /**
      * @param Request                         $request
-     * @param Codec $codec
+     * @param Codec                           $codec
      *
      * @return Response
      */

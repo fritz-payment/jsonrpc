@@ -9,6 +9,7 @@
  */
 namespace FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\JsonRpcException;
+
 class Exception extends JsonRpcException
 {
 }

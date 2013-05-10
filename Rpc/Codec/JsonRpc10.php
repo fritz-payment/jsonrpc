@@ -11,6 +11,7 @@ namespace FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
+
 class JsonRpc10 implements Codec
 {
     const VERSION = '1.0';
