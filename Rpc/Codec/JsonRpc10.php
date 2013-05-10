@@ -28,4 +28,22 @@ class JsonRpc10 implements Codec
     public function getResponse() {
         // TODO: Implement getResponse() method.
     }
+
+    /**
+     * @param \FritzPayment\JsonRpc\Request $request
+     *
+     * @return bool
+     */
+    public function isCodecRequest(Request $request) {
+        return $request->getVersion() == self::VERSION;
+    }
+
+    /**
+     * @param \FritzPayment\JsonRpc\Response $response
+     *
+     * @return bool
+     */
+    public function isCodecResponse(Response $response) {
+        return $response->getVersion() == self::VERSION;
+    }
 }

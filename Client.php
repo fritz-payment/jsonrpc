@@ -10,6 +10,9 @@
 namespace FritzPayment\JsonRpc;
 use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Client\Transport;
+use FritzPayment\JsonRpc\Request;
+use FritzPayment\JsonRpc\Response;
+use FritzPayment\JsonRpc\Rpc\Codec\Exception;
 
 class Client
 {
@@ -30,5 +33,19 @@ class Client
         $this->url       = $url;
         $this->codec     = $codec;
         $this->transport = $transport;
+    }
+
+    /**
+     * @return Request
+     */
+    public function newRequest() {
+        return $this->codec->getRequest();
+    }
+
+    public function exec(Request $request) {
+        if (!$this->codec->isCodecRequest($request)) {
+            throw new Exception('Invalid request. Codec cannot handle request object.');
+        }
+        return $this->transport->send($request, $this->codec);
     }
 }

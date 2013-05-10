@@ -7,33 +7,38 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace FritzPayment\JsonRpc\Rpc;
-use FritzPayment\JsonRpc\Request;
-use FritzPayment\JsonRpc\Response;
-
-interface Codec
+namespace FritzPayment\JsonRpc\Tests\ClientTest;
+class CodecStub implements \FritzPayment\JsonRpc\Rpc\Codec
 {
     /**
      * @return Request
      */
-    public function getRequest();
+    public function getRequest() {
+        return new RequestStub();
+    }
 
     /**
      * @return Response
      */
-    public function getResponse();
+    public function getResponse() {
+        return new ResponseStub();
+    }
 
     /**
      * @param \FritzPayment\JsonRpc\Request $request
      *
      * @return bool
      */
-    public function isCodecRequest(Request $request);
+    public function isCodecRequest(\FritzPayment\JsonRpc\Request $request) {
+        return ($request instanceof RequestStub);
+    }
 
     /**
      * @param \FritzPayment\JsonRpc\Response $response
      *
      * @return bool
      */
-    public function isCodecResponse(Response $response);
+    public function isCodecResponse(\FritzPayment\JsonRpc\Response $response) {
+        return ($response instanceof ResponseStub);
+    }
 }
