@@ -1,0 +1,29 @@
+{
+    "name":"fritz-payment/jsonrpc",
+    "type":"library",
+    "description":"A general JSON RPC (over HTTP) implementation",
+    "keywords":["client", "jsonrpc"],
+    "homepage":"https://github.com/fritz-payment/jsonrpc",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Christian Ruffer",
+            "email":"christian@fritz-payment.com",
+            "role":"Developer"
+        },
+        {
+            "name":"Seong-Min Kang",
+            "email":"seong@fritz-payment.com",
+            "role":"Developer"
+        }
+    ],
+    "require":{
+        "php":">=5.3.0"
+    },
+    "autoload":{
+        "psr-0":{
+            "FritzPayment\\JsonRpc":""
+        }
+    },
+    "target-dir":"FritzPayment/JsonRpc"
+}
