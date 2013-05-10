@@ -7,18 +7,25 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace FritzPayment\JsonRpc\Client;
+namespace FritzPayment\JsonRpc\Rpc\Codec;
+use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
-use FritzPayment\JsonRpc\Rpc\Codec;
-
-interface Transport
+class JsonRpc10 implements Codec
 {
+    const VERSION = '1.0';
+
     /**
-     * @param \FritzPayment\JsonRpc\Request   $request
-     * @param \FritzPayment\JsonRpc\Rpc\Codec $codec
-     *
+     * @return Request
+     */
+    public function getRequest() {
+        // TODO: Implement getRequest() method.
+    }
+
+    /**
      * @return Response
      */
-    public function send(Request $request, Codec $codec);
+    public function getResponse() {
+        // TODO: Implement getResponse() method.
+    }
 }
