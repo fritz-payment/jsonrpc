@@ -20,6 +20,7 @@ abstract class Request
      * @var bool
      */
     protected $isNotification = false;
+    protected $idSet = false;
 
     /**
      * Returns the JSON RPC protocol version.
@@ -60,6 +61,17 @@ abstract class Request
      */
     public function isNotification() {
         return $this->isNotification;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return Request
+     */
+    public function setId($id) {
+        $this->idSet = true;
+        $this->id = $id;
+        return $this;
     }
 
     /**
