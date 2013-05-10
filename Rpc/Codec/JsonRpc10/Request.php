@@ -9,6 +9,7 @@
  */
 namespace FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
 use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
+use FritzPayment\JsonRpc\Request\RequestException;
 use FritzPayment\JsonRpc\Request as BaseRequest;
 
 class Request extends BaseRequest
@@ -22,6 +23,32 @@ class Request extends BaseRequest
         return JsonRpc10::VERSION;
     }
 
+    public function setParams(array $params) {
+        $this->params = $params;
+        return $this;
+    }
+
+    protected function buildRequestArray() {
+        $req = array();
+        $req['method'] = $this->getMethod();
+        $req['params'] = $this->params;
+        if (!$this->isNotification()) {
+            if (!$this->idSet) {
+                throw new RequestException('Request is not a notification, but no id set.');
+            }
+            if ($this->id === null) {
+                throw new RequestException('NULL id is indistinguishable from notification request.');
+            }
+            $req['id'] = $this->id;
+        } else {
+            // JSON RPC 1.0 requires id to be NULL for notifications
+            // This is a little inconsistency in the spec since this won't allow NULL ids\
+            // Also see exception above
+            $req['id'] = null;
+        }
+        return $req;
+    }
+
     /**
      * Return the json encoded request as a string. It is the request implementation's job
      * to ensure the correctness of the JSON string.
@@ -29,6 +56,6 @@ class Request extends BaseRequest
      * @return string
      */
     public function getRequestBody() {
-        // TODO: Implement getRequestBody() method.
+        return json_encode($this->buildRequestArray(), JSON_FORCE_OBJECT);
     }
 }

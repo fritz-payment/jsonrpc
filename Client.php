@@ -12,7 +12,7 @@ use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Client\Transport;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
-use FritzPayment\JsonRpc\Rpc\Codec\Exception;
+use FritzPayment\JsonRpc\Exception\CodecException;
 
 class Client
 {
@@ -46,11 +46,11 @@ class Client
      * @param Request $request
      *
      * @return Response
-     * @throws Rpc\Codec\Exception
+     * @throws Exception\CodecException
      */
     public function exec(Request $request) {
         if (!$this->codec->isCodecRequest($request)) {
-            throw new Exception('Invalid request. Codec cannot handle request object.');
+            throw new CodecException('Invalid request. Codec cannot handle request object.');
         }
         return $this->transport->send($request, $this->codec);
     }

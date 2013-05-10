@@ -7,7 +7,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace FritzPayment\JsonRpc;
-class JsonRpcException extends \Exception
+namespace FritzPayment\JsonRpc\Exception;
+use FritzPayment\JsonRpc\Exception\JsonRpcException;
+
+class CodecException extends JsonRpcException
 {
 }

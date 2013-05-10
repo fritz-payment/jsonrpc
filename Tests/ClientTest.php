@@ -11,6 +11,7 @@ namespace FritzPayment\JsonRpc\Tests;
 use FritzPayment\JsonRpc\Tests\ClientTest\CodecStub;
 use FritzPayment\JsonRpc\Tests\ClientTest\TransportStub;
 use FritzPayment\JsonRpc\Tests\ClientTest\RequestStub;
+use FritzPayment\JsonRpc\Exception\CodecException;
 use FritzPayment\JsonRpc\Client;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
@@ -33,7 +34,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         try {
             $this->client->exec($request);
             $this->fail('Expecting exception on wrong codec.');
-        } catch (\FritzPayment\JsonRpc\Rpc\Codec\Exception $e) {
+        } catch (CodecException $e) {
             $this->assertContains('Codec cannot handle request', $e->getMessage());
         }
     }
