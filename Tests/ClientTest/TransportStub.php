@@ -7,12 +7,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace FritzPayment\JsonRpc\Client;
+namespace FritzPayment\JsonRpc\Tests\ClientTest;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
 use FritzPayment\JsonRpc\Rpc\Codec;
 
-interface Transport
+class TransportStub implements \FritzPayment\JsonRpc\Client\Transport
 {
     /**
      * @param \FritzPayment\JsonRpc\Request   $request
@@ -20,5 +20,7 @@ interface Transport
      *
      * @return Response
      */
-    public function send(Request $request, Codec $codec);
+    public function send(Request $request, Codec $codec) {
+        return $codec->getResponse();
+    }
 }
