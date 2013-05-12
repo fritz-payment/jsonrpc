@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 namespace FritzPayment\JsonRpc\Exception;
-class CodecException extends JsonRpcException
+class TransportException extends JsonRpcException
 {
+
 }
