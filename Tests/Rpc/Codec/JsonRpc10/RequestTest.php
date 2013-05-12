@@ -13,25 +13,39 @@ use FritzPayment\JsonRpc\Exception\RequestException;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Provide test fixtures for testRequestCorrectlyEncodes()
+     * @return array
+     */
     public function provideRequestEncodings() {
         return array(
             array(
                 'test',
                 array('test', 1, array('dd' => 'ee')),
+                false,
                 1,
                 '{"method":"test","params":["test",1,{"dd":"ee"}],"id":1}'
             ),
             array(
                 'System.Echo',
                 array(array('Msg' => 'test')),
+                false,
                 'dde',
                 '{"method":"System.Echo","params":[{"Msg":"test"}],"id":"dde"}'
             ),
             array(
                 'System.Echo',
                 array(array('Msg' => 'test', 'Msg2' => 'test2')),
+                false,
                 1,
                 '{"method":"System.Echo","params":[{"Msg":"test","Msg2":"test2"}],"id":1}'
+            ),
+            array(
+                'System.Echo',
+                array(array('Msg' => 'test', 'Msg2' => 'test2')),
+                true,
+                null,
+                '{"method":"System.Echo","params":[{"Msg":"test","Msg2":"test2"}],"id":null}'
             ),
         );
     }
@@ -41,12 +55,14 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      *
      * @param $method string
      * @param $params mixed
+     * @param $isNotification bool
      * @param $id mixed
      * @param $expected string
      */
-    public function testRequestCorrectlyEncodes($method, $params, $id, $expected) {
+    public function testRequestCorrectlyEncodes($method, $params, $isNotification, $id, $expected) {
         $request = new Request();
         $request->setMethod($method)
+            ->setIsNotification($isNotification)
             ->setId($id);
         $request->setParams($params);
         $this->assertEquals($expected, $request->getRequestBody());
