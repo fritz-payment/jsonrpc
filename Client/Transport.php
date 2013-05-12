@@ -9,16 +9,14 @@
  */
 namespace FritzPayment\JsonRpc\Client;
 use FritzPayment\JsonRpc\Request;
-use FritzPayment\JsonRpc\Response;
 use FritzPayment\JsonRpc\Rpc\Codec;
 
 interface Transport
 {
     /**
      * @param \FritzPayment\JsonRpc\Request   $request
-     * @param \FritzPayment\JsonRpc\Rpc\Codec $codec
      *
-     * @return Response
+     * @return string
      */
-    public function send(Request $request, Codec $codec);
+    public function send(Request $request);
 }

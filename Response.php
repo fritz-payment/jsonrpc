@@ -45,7 +45,7 @@ abstract class Response
     abstract public function getVersion();
 
     /**
-     * Called by transport. Pass the raw body to the response
+     * Called by client. Pass the raw body to the response
      *
      * @param $responseBody
      *
@@ -81,7 +81,7 @@ abstract class Response
     }
 
     /**
-     * Will be called by the transport. This method should take the raw response body and
+     * Will be called by the client. This method should take the raw response body and
      * create the applicable result objects.
      *
      * @return bool

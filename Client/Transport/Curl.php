@@ -11,18 +11,16 @@ namespace FritzPayment\JsonRpc\Client;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Client\Transport;
-use FritzPayment\JsonRpc\Response;
 
 class Curl implements Transport
 {
 
     /**
      * @param Request                         $request
-     * @param Codec                           $codec
      *
-     * @return Response
+     * @return string
      */
-    public function send(Request $request, Codec $codec) {
+    public function send(Request $request) {
         // TODO: Implement send() method.
     }
 }
