@@ -13,7 +13,7 @@ abstract class Request
     /**
      * @var string
      */
-    protected $method;
+    protected $method = null;
     protected $params = null;
     protected $id = null;
     /**
@@ -60,6 +60,10 @@ abstract class Request
      * @return bool
      */
     public function isNotification() {
+        // if id is set, this is not a notification
+        if ($this->id !== null) {
+            return false;
+        }
         return $this->isNotification;
     }
 
