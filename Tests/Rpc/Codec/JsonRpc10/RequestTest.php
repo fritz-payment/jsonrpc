@@ -89,10 +89,11 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         try {
             $request->getRequestBody();
-            $this->fail('Expecting exception.');
         } catch (RequestException $e) {
             $this->assertContains('no method set', $e->getMessage());
+            return;
         }
+        $this->fail('Expecting exception.');
     }
 
     public function testNotNotificationWithoutIdThrowsException() {
@@ -100,10 +101,11 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request->setMethod('test');
         try {
             $request->getRequestBody();
-            $this->fail('Expecting exception.');
         } catch (RequestException $e) {
             $this->assertContains('no id set', $e->getMessage());
+            return;
         }
+        $this->fail('Expecting exception.');
     }
 
     public function testNotNotificationWithNullIdThrowsException() {
@@ -113,9 +115,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             ->setId(null);
         try {
             $request->getRequestBody();
-            $this->fail('Expecting exception.');
         } catch (RequestException $e) {
             $this->assertContains('NULL id', $e->getMessage());
+            return;
         }
+        $this->fail('Expecting exception.');
     }
 }
