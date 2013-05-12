@@ -14,6 +14,13 @@ use FritzPayment\JsonRpc\Rpc\Codec;
 interface Transport
 {
     /**
+     * @param $url
+     *
+     * @return bool
+     */
+    public function setUrl($url);
+
+    /**
      * @param \FritzPayment\JsonRpc\Request   $request
      *
      * @return string

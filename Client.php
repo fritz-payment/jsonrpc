@@ -12,6 +12,7 @@ use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Client\Transport;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
+use FritzPayment\JsonRpc\Exception\ClientException;
 use FritzPayment\JsonRpc\Exception\CodecException;
 use FritzPayment\JsonRpc\Exception\TransportException;
 
@@ -34,6 +35,9 @@ class Client
         $this->url       = $url;
         $this->codec     = $codec;
         $this->transport = $transport;
+        if (!$this->transport->setUrl($this->url)) {
+            throw new ClientException('Error setting URL for transport.');
+        }
     }
 
     /**

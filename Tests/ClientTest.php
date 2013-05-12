@@ -29,14 +29,28 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->client    = new Client('http://localhost', $this->codec, $this->transport);
     }
 
+    public function testTransportWithUrlSetErrorThrowsException() {
+        $codec                      = new CodecStub();
+        $transport                  = new TransportStub();
+        $transport->urlSetCorrectly = false;
+        try {
+            new Client('http://localhost', $codec, $transport);
+        } catch (\FritzPayment\JsonRpc\Exception\ClientException $e) {
+            $this->assertContains('URL for transport', $e->getMessage());
+            return;
+        }
+        $this->fail('Expecting exception.');
+    }
+
     public function testSendRequestWithIncompatibleCodecThrowsException() {
         $request = new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Request();
         try {
             $this->client->exec($request);
-            $this->fail('Expecting exception on wrong codec.');
         } catch (CodecException $e) {
             $this->assertContains('Codec cannot handle request', $e->getMessage());
+            return;
         }
+        $this->fail('Expecting exception on wrong codec.');
     }
 
     public function testCreateRequestCreatesCorrectCodecRequest() {

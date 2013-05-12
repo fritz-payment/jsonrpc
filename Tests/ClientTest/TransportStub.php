@@ -13,6 +13,17 @@ use FritzPayment\JsonRpc\Rpc\Codec;
 
 class TransportStub implements \FritzPayment\JsonRpc\Client\Transport
 {
+    public $urlSetCorrectly = true;
+
+    /**
+     * @param $url
+     *
+     * @return bool
+     */
+    public function setUrl($url) {
+        return $this->urlSetCorrectly;
+    }
+
     /**
      * @param \FritzPayment\JsonRpc\Request   $request
      *
