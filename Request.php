@@ -74,7 +74,7 @@ abstract class Request
      */
     public function setId($id) {
         $this->idSet = true;
-        $this->id = $id;
+        $this->id    = $id;
         return $this;
     }
 

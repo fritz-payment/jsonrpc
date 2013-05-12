@@ -20,14 +20,14 @@ class JsonRpc10 implements Codec
      * @return Request
      */
     public function getRequest() {
-        // TODO: Implement getRequest() method.
+        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Request();
     }
 
     /**
      * @return Response
      */
     public function getResponse() {
-        // TODO: Implement getResponse() method.
+        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Response();
     }
 
     /**

@@ -10,6 +10,7 @@
 namespace FritzPayment\JsonRpc\Tests\ClientTest;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
+
 class CodecStub implements \FritzPayment\JsonRpc\Rpc\Codec
 {
     /**
