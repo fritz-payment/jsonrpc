@@ -10,9 +10,13 @@
 namespace FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
 use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
 use FritzPayment\JsonRpc\Response as BaseResponse;
+use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Error;
+use FritzPayment\JsonRpc\Exception\ResponseException;
 
 class Response extends BaseResponse
 {
+    protected $responseJson;
+    protected $result;
 
     /**
      * Returns the JSON RPC protocol version.
@@ -24,26 +28,52 @@ class Response extends BaseResponse
     }
 
     /**
-     * @return string
-     */
-    public function getResultString() {
-        // TODO: Implement getResultString() method.
-    }
-
-    /**
      * @return \stdClass|array
      */
-    public function getResultJson() {
-        // TODO: Implement getResultJson() method.
+    public function getResult() {
+        if (!isset($this->result)) {
+            return null;
+        }
+        return $this->result;
     }
 
     /**
-     * Will be called by the transport. This method should take the raw response body and
+     * Will be called by the client. This method should take the raw response body and
      * create the applicable result objects.
      *
+     * The concrete implementation should always check for the correctness
+     * of the JSON structure.
+     *
      * @return bool
+     * @throws \FritzPayment\JsonRpc\Exception\ResponseException
      */
     public function parseResponse() {
-        // TODO: Implement parseResponse() method.
+        if ($this->request->isNotification()) {
+            // notification has no response body
+            $this->result = null;
+            return true;
+        }
+
+        if (!$this->parseResponseBody()) {
+            throw new ResponseException('Could not parse JSON: ' . $this->jsonLastError);
+        }
+        if (!isset($this->request)) {
+            throw new ResponseException('Implementation error. Missing request object.');
+        }
+        if (!$this->request->isNotification()) {
+            if (!isset($this->responseJson->id) || $this->responseJson->id != $this->request->getId()) {
+                throw new ResponseException('Request was not a notification, but missing id.');
+            }
+        }
+        if (isset($this->responseJson->error) && $this->responseJson->error !== null) {
+            // result must be null if there was an error
+            if ($this->responseJson->result !== null) {
+                throw new ResponseException('Result must be null if error.');
+            }
+            $this->error = new Error($this->responseJson->error);
+            return false;
+        }
+        $this->result = $this->responseJson->result;
+        return true;
     }
 }

@@ -10,6 +10,7 @@
 namespace FritzPayment\JsonRpc\Rpc;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
+use FritzPayment\JsonRpc\Error;
 
 interface Codec
 {
@@ -36,4 +37,11 @@ interface Codec
      * @return bool
      */
     public function isCodecResponse(Response $response);
+
+    /**
+     * @param \FritzPayment\JsonRpc\Error $error
+     *
+     * @return bool
+     */
+    public function isCodecError(Error $error);
 }

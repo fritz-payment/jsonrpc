@@ -10,6 +10,8 @@
 namespace FritzPayment\JsonRpc\Tests\ClientTest;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
+use FritzPayment\JsonRpc\Error;
+
 class CodecStub implements \FritzPayment\JsonRpc\Rpc\Codec
 {
     /**
@@ -42,5 +44,14 @@ class CodecStub implements \FritzPayment\JsonRpc\Rpc\Codec
      */
     public function isCodecResponse(\FritzPayment\JsonRpc\Response $response) {
         return ($response instanceof ResponseStub);
+    }
+
+    /**
+     * @param \FritzPayment\JsonRpc\Error $error
+     *
+     * @return bool
+     */
+    public function isCodecError(Error $error) {
+        return ($error instanceof ErrorStub);
     }
 }

@@ -7,16 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace FritzPayment\JsonRpc;
-abstract class Error
+namespace FritzPayment\JsonRpc\Exception;
+class ClientException extends JsonRpcException
 {
-    /**
-     * @return string
-     */
-    abstract public function getVersion();
-
-    /**
-     * @return string
-     */
-    abstract public function error();
 }
