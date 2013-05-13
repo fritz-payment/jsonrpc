@@ -21,20 +21,6 @@ class ResponseStub extends \FritzPayment\JsonRpc\Response
     }
 
     /**
-     * @return string
-     */
-    public function getResultString() {
-        return 'resultString';
-    }
-
-    /**
-     * @return \stdClass|array
-     */
-    public function getResultJson() {
-        return new \stdClass();
-    }
-
-    /**
      * Will be called by the transport. This method should take the raw response body and
      * create the applicable result objects.
      *
@@ -42,5 +28,12 @@ class ResponseStub extends \FritzPayment\JsonRpc\Response
      */
     public function parseResponse() {
         return true;
+    }
+
+    /**
+     * @return \stdClass|array
+     */
+    public function getResult() {
+        return new \stdClass();
     }
 }

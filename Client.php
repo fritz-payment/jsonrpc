@@ -50,7 +50,7 @@ class Client
     /**
      * @param Request $request
      *
-     * @return Response
+     * @return bool|Response
      * @throws Exception\CodecException
      * @throws Exception\TransportException
      */
@@ -64,8 +64,12 @@ class Client
             $ex = new TransportException('Error sending request.', 0, $e);
             throw $ex;
         }
+        if ($responseBody === false) {
+            return false;
+        }
         $response = $this->codec->getResponse();
-        $response->setResponseBody($responseBody)
+        $response->setRequest($request)
+            ->setResponseBody($responseBody)
             ->parseResponse();
         return $response;
     }

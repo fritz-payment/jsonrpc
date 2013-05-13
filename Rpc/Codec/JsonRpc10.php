@@ -11,6 +11,7 @@ namespace FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Response;
+use FritzPayment\JsonRpc\Error;
 
 class JsonRpc10 implements Codec
 {
@@ -46,5 +47,14 @@ class JsonRpc10 implements Codec
      */
     public function isCodecResponse(Response $response) {
         return $response->getVersion() == self::VERSION;
+    }
+
+    /**
+     * @param \FritzPayment\JsonRpc\Error $error
+     *
+     * @return bool
+     */
+    public function isCodecError(Error $error) {
+        return $error->getVersion() == self::VERSION;
     }
 }

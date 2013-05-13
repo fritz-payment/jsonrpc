@@ -21,9 +21,25 @@ interface Transport
     public function setUrl($url);
 
     /**
+     * The method, which should actually send the request.
+     * It should return the response (JSON) body or FALSE if something went wrong.
+     * Error details should be returned through the methods getErrorCode() and getErrorMessage().
+     * An expected transport error (e.g. HTTP error codes) should not throw an exception, but be
+     * handled as an error.
+     *
      * @param \FritzPayment\JsonRpc\Request   $request
      *
-     * @return string
+     * @return string|bool
      */
     public function send(Request $request);
+
+    /**
+     * @return int
+     */
+    public function getErrorCode();
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage();
 }

@@ -78,6 +78,10 @@ abstract class Request
         return $this;
     }
 
+    public function getId() {
+        return $this->id;
+    }
+
     /**
      * Return the json encoded request as a string. It is the request implementation's job
      * to ensure the correctness of the JSON string.

@@ -32,4 +32,18 @@ class TransportStub implements \FritzPayment\JsonRpc\Client\Transport
     public function send(Request $request) {
         return 'body';
     }
+
+    /**
+     * @return int
+     */
+    public function getErrorCode() {
+        return 1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage() {
+        return 'error';
+    }
 }

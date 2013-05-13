@@ -19,6 +19,8 @@ class Curl implements Transport
     protected $httpMethod = 'POST';
     protected $curlOptions = array();
     protected $headers = array();
+    protected $errorNo;
+    protected $errorMsg;
 
     public function setCurlOptions(array $options) {
         $this->curlOptions = $options;
@@ -96,6 +98,26 @@ class Curl implements Transport
         if (!curl_setopt_array($ch, $this->createCurlOptions())) {
             throw new TransportException('Could not initialize cURL options.');
         }
+        $responseBody = curl_exec($ch);
+        if ($responseBody === false) {
+            $this->errorNo  = curl_errno($ch);
+            $this->errorMsg = curl_error($ch);
+        }
         curl_close($ch);
+        return $responseBody;
+    }
+
+    /**
+     * @return int
+     */
+    public function getErrorCode() {
+        return $this->errorNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage() {
+        return $this->errorMsg;
     }
 }
