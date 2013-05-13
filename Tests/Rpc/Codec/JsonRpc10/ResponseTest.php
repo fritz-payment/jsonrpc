@@ -51,6 +51,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $resp->setRequest($request)
             ->setResponseBody($responseBody);
         $this->assertTrue($resp->parseResponse());
+        $this->assertFalse($resp->isError());
         $this->assertEquals($expected, $resp->getResult());
     }
 
