@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 namespace FritzPayment\JsonRpc;
+use FritzPayment\JsonRpc\Request;
+
 /**
  * A JSON RPC response.
  *
@@ -18,6 +20,11 @@ namespace FritzPayment\JsonRpc;
 abstract class Response
 {
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @var mixed
      */
     protected $id;
@@ -26,9 +33,27 @@ abstract class Response
      */
     protected $responseBody;
     /**
+     * @var \stdClass
+     */
+    protected $responseJson;
+    /**
+     * @var int
+     */
+    protected $jsonLastError;
+    /**
      * @var Error
      */
     protected $error = null;
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function setRequest(Request $request) {
+        $this->request = $request;
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -45,7 +70,7 @@ abstract class Response
     abstract public function getVersion();
 
     /**
-     * Called by transport. Pass the raw body to the response
+     * Called by client. Pass the raw body to the response
      *
      * @param $responseBody
      *
@@ -57,14 +82,9 @@ abstract class Response
     }
 
     /**
-     * @return string
-     */
-    abstract public function getResultString();
-
-    /**
      * @return \stdClass|array
      */
-    abstract public function getResultJson();
+    abstract public function getResult();
 
     /**
      * @return bool
@@ -80,9 +100,21 @@ abstract class Response
         return $this->error;
     }
 
+    protected function parseResponseBody() {
+        $this->responseJson = json_decode($this->responseBody);
+        if ($this->responseJson === null) {
+            $this->jsonLastError = json_last_error();
+            return false;
+        }
+        return true;
+    }
+
     /**
-     * Will be called by the transport. This method should take the raw response body and
+     * Will be called by the client. This method should take the raw response body and
      * create the applicable result objects.
+     *
+     * The concrete implementation should always check for the correctness
+     * of the JSON structure.
      *
      * @return bool
      */

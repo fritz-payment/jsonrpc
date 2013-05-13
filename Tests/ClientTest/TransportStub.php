@@ -9,18 +9,41 @@
  */
 namespace FritzPayment\JsonRpc\Tests\ClientTest;
 use FritzPayment\JsonRpc\Request;
-use FritzPayment\JsonRpc\Response;
 use FritzPayment\JsonRpc\Rpc\Codec;
 
 class TransportStub implements \FritzPayment\JsonRpc\Client\Transport
 {
+    public $urlSetCorrectly = true;
+
+    /**
+     * @param $url
+     *
+     * @return bool
+     */
+    public function setUrl($url) {
+        return $this->urlSetCorrectly;
+    }
+
     /**
      * @param \FritzPayment\JsonRpc\Request   $request
-     * @param \FritzPayment\JsonRpc\Rpc\Codec $codec
      *
-     * @return Response
+     * @return string
      */
-    public function send(Request $request, Codec $codec) {
-        return $codec->getResponse();
+    public function send(Request $request) {
+        return 'body';
+    }
+
+    /**
+     * @return int
+     */
+    public function getErrorCode() {
+        return 1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage() {
+        return 'error';
     }
 }

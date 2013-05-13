@@ -9,11 +9,16 @@
  */
 namespace FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
 use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
-use FritzPayment\JsonRpc\Request\RequestException;
+use FritzPayment\JsonRpc\Exception\RequestException;
 use FritzPayment\JsonRpc\Request as BaseRequest;
 
 class Request extends BaseRequest
 {
+    public function __construct() {
+        // initialize empty params
+        $this->params = array();
+    }
+
     /**
      * Returns the JSON RPC protocol version.
      *
@@ -24,12 +29,16 @@ class Request extends BaseRequest
     }
 
     public function setParams(array $params) {
-        $this->params = $params;
+        // specification requires params to be an indexed array in PHP
+        $this->params = array_values($params);
         return $this;
     }
 
     protected function buildRequestArray() {
         $req = array();
+        if ($this->getMethod() === null || !$this->getMethod()) {
+            throw new RequestException('Invalid method or no method set.');
+        }
         $req['method'] = $this->getMethod();
         $req['params'] = $this->params;
         if (!$this->isNotification()) {
@@ -37,12 +46,14 @@ class Request extends BaseRequest
                 throw new RequestException('Request is not a notification, but no id set.');
             }
             if ($this->id === null) {
+                // No notification but NULL id. This is almost never intended.
+                // That's why we throw an exception here
                 throw new RequestException('NULL id is indistinguishable from notification request.');
             }
             $req['id'] = $this->id;
         } else {
             // JSON RPC 1.0 requires id to be NULL for notifications
-            // This is a little inconsistency in the spec since this won't allow NULL ids\
+            // This is a little inconsistency in the spec since this won't allow NULL ids
             // Also see exception above
             $req['id'] = null;
         }
@@ -56,6 +67,6 @@ class Request extends BaseRequest
      * @return string
      */
     public function getRequestBody() {
-        return json_encode($this->buildRequestArray(), JSON_FORCE_OBJECT);
+        return json_encode($this->buildRequestArray());
     }
 }
