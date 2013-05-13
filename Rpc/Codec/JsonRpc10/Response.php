@@ -61,8 +61,11 @@ class Response extends BaseResponse
             throw new ResponseException('Implementation error. Missing request object.');
         }
         if (!$this->request->isNotification()) {
-            if (!isset($this->responseJson->id) || $this->responseJson->id != $this->request->getId()) {
+            if (!isset($this->responseJson->id)) {
                 throw new ResponseException('Request was not a notification, but missing id.');
+            }
+            if ($this->responseJson->id != $this->request->getId()) {
+                throw new ResponseException('Request/response id mismatch.');
             }
         }
         if (isset($this->responseJson->error) && $this->responseJson->error !== null) {
