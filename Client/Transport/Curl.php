@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace FritzPayment\JsonRpc\Client;
+namespace FritzPayment\JsonRpc\Client\Transport;
 use FritzPayment\JsonRpc\Request;
 use FritzPayment\JsonRpc\Rpc\Codec;
 use FritzPayment\JsonRpc\Client\Transport;
