@@ -7,6 +7,14 @@ A general JSON RPC implementation.
 * Different JSON RPC Codecs (currently JSON RPC Version 1.0 as defined by http://json-rpc.org/wiki/specification is implemented; JSON RPC 2.0 http://www.jsonrpc.org/specification will be supported soon).
 * Clean API.
 
+# What's new
+
+## Version 0.1.0
+
+* Finished basic implementations.
+
+We will start working on the JSON RPC 2.0 Codec now.
+
 # Getting started
 
 ## Installation
