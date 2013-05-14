@@ -10,4 +10,14 @@
 namespace FritzPayment\JsonRpc\Exception;
 class ResponseException extends JsonRpcException
 {
+    protected $responseBody;
+
+    public function setResponseBody($responseBody) {
+        $this->responseBody = $responseBody;
+        return $this;
+    }
+
+    public function getResponseBody() {
+        return $this->responseBody;
+    }
 }
