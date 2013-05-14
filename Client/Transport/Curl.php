@@ -95,7 +95,11 @@ class Curl implements Transport
         if ($ch === false) {
             throw new TransportException('Could not initialize cURL handle.');
         }
-        if (!curl_setopt_array($ch, $this->createCurlOptions())) {
+        $options = $this->createCurlOptions();
+        if (isset($options[CURLOPT_POST]) && $options[CURLOPT_POST]) {
+            $options[CURLOPT_POSTFIELDS] = $request->getRequestBody();
+        }
+        if (!curl_setopt_array($ch, $options)) {
             throw new TransportException('Could not initialize cURL options.');
         }
         $responseBody = curl_exec($ch);
