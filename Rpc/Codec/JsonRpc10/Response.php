@@ -55,7 +55,9 @@ class Response extends BaseResponse
         }
 
         if (!$this->parseResponseBody()) {
-            throw new ResponseException('Could not parse JSON: ' . $this->jsonLastError);
+            $e = new ResponseException('Could not parse JSON: ' . $this->jsonLastError);
+            $e->setResponseBody($this->responseBody);
+            throw $e;
         }
         if (!isset($this->request)) {
             throw new ResponseException('Implementation error. Missing request object.');
