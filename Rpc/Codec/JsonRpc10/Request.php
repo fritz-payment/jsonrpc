@@ -28,6 +28,16 @@ class Request extends BaseRequest
         return JsonRpc10::VERSION;
     }
 
+    /**
+     * Set request params.
+     * Since the specs require the params to be an actual array in JSON,
+     * this method will only take the values of the passed array
+     * and store it in an indexed array.
+     *
+     * @param array $params
+     *
+     * @return Request
+     */
     public function setParams(array $params) {
         // specification requires params to be an indexed array in PHP
         $this->params = array_values($params);
