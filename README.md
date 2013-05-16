@@ -1,11 +1,23 @@
 jsonrpc
 =======
 
-A general JSON RPC implementation.
+A general JSON RPC implementation for PHP.
 
 * Support for different transports (currently a cURL implementation exists).
 * Different JSON RPC Codecs (currently JSON RPC Version 1.0 as defined by http://json-rpc.org/wiki/specification is implemented; JSON RPC 2.0 http://www.jsonrpc.org/specification will be supported soon).
 * Clean API.
+
+# Project Wiki
+
+[GitHub Project Wiki](https://github.com/fritz-payment/jsonrpc/wiki)
+
+# What's new
+
+## Version 0.1.0
+
+* Finished basic implementations.
+
+We will start working on the JSON RPC 2.0 Codec now.
 
 # Getting started
 
