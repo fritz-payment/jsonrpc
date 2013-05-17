@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Jsonrpc : A general JSON RPC client." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Jsonrpc</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/fritz-payment/jsonrpc">View on GitHub</a>
+
+          <h1 id="project_title">Jsonrpc</h1>
+          <h2 id="project_tagline">A general JSON RPC client.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/fritz-payment/jsonrpc/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/fritz-payment/jsonrpc/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>jsonrpc</h1>
+
+<p>A general JSON RPC client implementation for PHP.</p>
+
+<ul>
+<li>Support for different transports (currently a cURL implementation exists).</li>
+<li>Different JSON RPC Codecs (currently JSON RPC Version 1.0 as defined by <a href="http://json-rpc.org/wiki/specification">http://json-rpc.org/wiki/specification</a> is implemented; JSON RPC 2.0 <a href="http://www.jsonrpc.org/specification">http://www.jsonrpc.org/specification</a> will be supported soon).</li>
+<li>Clean API.</li>
+</ul><h1>Project Wiki</h1>
+
+<p><a href="https://github.com/fritz-payment/jsonrpc/wiki">GitHub Project Wiki</a></p>
+
+<h1>What's new</h1>
+
+<h2>Version 0.1.0</h2>
+
+<ul>
+<li>Finished basic implementations.</li>
+</ul><p>We will start working on the JSON RPC 2.0 Codec now.</p>
+
+<h1>Getting started</h1>
+
+<h2>Installation</h2>
+
+<p>You can use Composer (<a href="http://www.getcomposer.org">http://www.getcomposer.org</a>) to install the JSON RPC library.</p>
+
+<pre><code>{
+    "require": {
+        "fritz-payment/jsonrpc": "dev-master"
+    }
+}
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>This example calls a JSON RPC 1.0 method "test.echo" on the URL <a href="http://www.example.com">http://www.example.com</a> using cURL.</p>
+
+<pre><code>&lt;?php
+use \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
+use \FritzPayment\JsonRpc\Client\Transport\Curl;
+
+// initialize JSON RPC 1.0 Codec
+$codec = new JsonRpc10();
+// initialize cURL transport
+$transport = new Curl();
+
+// initialize client
+$client = new \FritzPayment\JsonRpc\Client('http://www.example.com', $codec, $transport);
+
+// create a new request
+/* @var $request \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Request */
+$request = $client-&gt;newRequest();
+$request-&gt;setMethod('test.echo')
+    -&gt;setId('1');
+$request-&gt;setParams(array('test message'));
+
+// send request
+$response = $client-&gt;exec($request);
+if ($response === false) {
+    // failed
+} else {
+    if ($response-&gt;isError()) {
+        // JSON RPC error
+        echo $response-&gt;getError()-&gt;error();
+    } else {
+        var_dump($response-&gt;getResult());
+    }
+}
+</code></pre>
+
+<h2>Extending the library</h2>
+
+<p>It is possible to create your own implementations of Transports and Codecs.</p>
+
+<p>The abstract Transport and Codec classes and the existing implementations should give you an idea of how to do that.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Jsonrpc maintained by <a href="https://github.com/fritz-payment">fritz-payment</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
