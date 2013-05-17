@@ -1,7 +1,7 @@
 {
     "name":"fritz-payment/jsonrpc",
     "type":"library",
-    "description":"A general JSON RPC implementation",
+    "description":"A general JSON RPC client.",
     "keywords":["client", "jsonrpc", "json", "rpc", "cURL"],
     "homepage":"https://github.com/fritz-payment/jsonrpc",
     "license":"MIT",
