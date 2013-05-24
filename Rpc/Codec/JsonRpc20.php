@@ -14,26 +14,26 @@ use FritzPayment\JsonRpc\Response;
 use FritzPayment\JsonRpc\Error;
 
 /**
- * JSON RPC 1.0 Codec
+ * JSON RPC 2.0 Codec
  *
- * @see http://json-rpc.org/wiki/specification
+ * @see http://www.jsonrpc.org/specification
  */
-class JsonRpc10 implements Codec
+class JsonRpc20 implements Codec
 {
-    const VERSION = '1.0';
+    const VERSION = '2.0';
 
     /**
      * @return Request
      */
     public function getRequest() {
-        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Request();
+        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20\Request();
     }
 
     /**
      * @return Response
      */
     public function getResponse() {
-        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Response();
+        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20\Response();
     }
 
     /**
