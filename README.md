@@ -13,11 +13,13 @@ A general JSON RPC implementation for PHP.
 
 # What's new
 
+## Version 0.2.0
+
+* Implementation of JSON RPC 2.0 Codec.
+
 ## Version 0.1.0
 
 * Finished basic implementations.
-
-We will start working on the JSON RPC 2.0 Codec now.
 
 # Getting started
 
