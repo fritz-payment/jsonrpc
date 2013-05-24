@@ -7,10 +7,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
-use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10;
+namespace FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20;
+use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20;
 use FritzPayment\JsonRpc\Response as BaseResponse;
-use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc10\Error;
+use FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20\Error;
 use FritzPayment\JsonRpc\Exception\ResponseException;
 
 class Response extends BaseResponse
@@ -24,7 +24,7 @@ class Response extends BaseResponse
      * @return string
      */
     public function getVersion() {
-        return JsonRpc10::VERSION;
+        return JsonRpc20::VERSION;
     }
 
     /**
@@ -59,6 +59,14 @@ class Response extends BaseResponse
         if (!isset($this->request)) {
             throw new ResponseException('Implementation error. Missing request object.');
         }
+        if (isset($this->responseJson->error) && $this->responseJson->error !== null) {
+            // result must not exist if there was an error
+            if (isset($this->responseJson->result)) {
+                throw new ResponseException('Result must not exist if error.');
+            }
+            $this->error = new Error($this->responseJson->error);
+            return false;
+        }
         if (!$this->request->isNotification()) {
             if (!isset($this->responseJson->id)) {
                 throw new ResponseException('Request was not a notification, but missing id.');
@@ -66,14 +74,6 @@ class Response extends BaseResponse
             if ($this->responseJson->id != $this->request->getId()) {
                 throw new ResponseException('Request/response id mismatch.');
             }
-        }
-        if (isset($this->responseJson->error) && $this->responseJson->error !== null) {
-            // result must be null if there was an error
-            if ($this->responseJson->result !== null) {
-                throw new ResponseException('Result must be null if error.');
-            }
-            $this->error = new Error($this->responseJson->error);
-            return false;
         }
         $this->result = $this->responseJson->result;
         return true;
