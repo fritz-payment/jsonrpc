@@ -15,6 +15,7 @@ use FritzPayment\JsonRpc\Exception\ResponseException;
 
 class Response extends BaseResponse
 {
+    protected $strictMode = false;
     protected $responseJson;
     protected $result;
 
@@ -25,6 +26,16 @@ class Response extends BaseResponse
      */
     public function getVersion() {
         return JsonRpc20::VERSION;
+    }
+
+    /**
+     * @param $strict bool
+     *
+     * @return Response
+     */
+    public function setStrictMode($strict) {
+        $this->strictMode = (bool)$strict;
+        return $this;
     }
 
     /**
@@ -61,7 +72,7 @@ class Response extends BaseResponse
         }
         if (isset($this->responseJson->error) && $this->responseJson->error !== null) {
             // result must not exist if there was an error
-            if (isset($this->responseJson->result)) {
+            if ($this->strictMode && isset($this->responseJson->result)) {
                 throw new ResponseException('Result must not exist if error.');
             }
             if (!$this->responseJson->error instanceof \stdClass) {

@@ -14,6 +14,8 @@ use FritzPayment\JsonRpc\Request as BaseRequest;
 
 class Request extends BaseRequest
 {
+    protected $strictMode = false;
+
     /**
      * Returns the JSON RPC protocol version.
      *
@@ -21,6 +23,16 @@ class Request extends BaseRequest
      */
     public function getVersion() {
         return JsonRpc20::VERSION;
+    }
+
+    /**
+     * @param $strict bool
+     *
+     * @return Request
+     */
+    public function setStrictMode($strict) {
+        $this->strictMode = (bool)$strict;
+        return $this;
     }
 
     public function setMethod($method) {
@@ -61,7 +73,7 @@ class Request extends BaseRequest
             if (!$this->idSet) {
                 throw new RequestException('Request is not a notification, but no id set.');
             }
-            if ($this->id === null) {
+            if ($this->strictMode && $this->id === null) {
                 // No notification but NULL id. This is almost never intended.
                 // That's why we throw an exception here
                 throw new RequestException('NULL id is indistinguishable from notification request.');

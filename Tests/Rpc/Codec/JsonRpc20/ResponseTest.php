@@ -91,6 +91,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $resp = new Response();
         $resp->setRequest($req)
             ->setResponseBody('{"id":"1","error":"error","result":{}}');
+        $resp->setStrictMode(true);
         try {
             $resp->parseResponse();
         } catch (ResponseException $e) {
