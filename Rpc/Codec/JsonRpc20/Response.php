@@ -64,6 +64,9 @@ class Response extends BaseResponse
             if (isset($this->responseJson->result)) {
                 throw new ResponseException('Result must not exist if error.');
             }
+            if (!$this->responseJson->error instanceof \stdClass) {
+                throw new ResponseException('Error object type error.');
+            }
             $this->error = new Error($this->responseJson->error);
             return false;
         }
