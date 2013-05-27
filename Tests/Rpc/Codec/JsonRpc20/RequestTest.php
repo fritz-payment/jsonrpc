@@ -106,6 +106,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $request->setMethod('test')
             ->setIsNotification(false)
             ->setId(null);
+        $request->setStrictMode(true);
         try {
             $request->getRequestBody();
         } catch (RequestException $e) {

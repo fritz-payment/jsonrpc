@@ -22,18 +22,45 @@ class JsonRpc20 implements Codec
 {
     const VERSION = '2.0';
 
+    protected $options = array();
+
+    /**
+     * Options:
+     *
+     * 'strictMode' => bool - if this option is present, any deviation from
+     *                        the JSON RPC 2.0 specification will throw an exception
+     *
+     * @param array $options
+     */
+    public function __construct(array $options = array()) {
+        $this->options = array_merge($this->options, $options);
+    }
+
+    /**
+     * Whether strict mode is enabled
+     *
+     * @return bool
+     */
+    public function isStrictMode() {
+        return isset($this->options['strictMode']);
+    }
+
     /**
      * @return Request
      */
     public function getRequest() {
-        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20\Request();
+        $req = new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20\Request();
+        $req->setStrictMode($this->isStrictMode());
+        return $req;
     }
 
     /**
      * @return Response
      */
     public function getResponse() {
-        return new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20\Response();
+        $resp = new \FritzPayment\JsonRpc\Rpc\Codec\JsonRpc20\Response();
+        $resp->setStrictMode($this->isStrictMode());
+        return $resp;
     }
 
     /**
